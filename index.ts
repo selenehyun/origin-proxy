@@ -1,14 +1,27 @@
 import { serve } from "https://deno.land/std/http/server.ts";
 
 const PORT = 3000;
-const TARGET_DOMAIN = "selenehyun.notion.site"; // 도메인 A의 주소
+
+function getTargetDomain(hostname: string): string {
+  // 도메인 A의 주소를 반환
+  return (
+    {
+      "climb.place": "selenehyun.notion.site",
+      "scalare.climb.place": "selenehyun.notion.site",
+    }[hostname] || "selenehyun.notion.site"
+  );
+}
 
 async function handleRequest(req: Request): Promise<Response> {
   try {
     const originalUrl = new URL(req.url);
 
+    const TARGET_DOMAIN = getTargetDomain(originalUrl.hostname);
+
     // IP를 사용하여 URL 생성
-    const targetUrl = new URL(`https://${TARGET_DOMAIN}${originalUrl.pathname}${originalUrl.search}`);
+    const targetUrl = new URL(
+      `https://${TARGET_DOMAIN}${originalUrl.pathname}${originalUrl.search}`
+    );
 
     const fetchRequest = new Request(targetUrl.toString(), {
       method: req.method,
