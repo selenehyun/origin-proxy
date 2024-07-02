@@ -1,55 +1,38 @@
-const http = require("http");
-const https = require("https");
-const dns = require("dns");
+import { serve } from "https://deno.land/std/http/server.ts";
 
 const PORT = 3000;
-const TARGET_DOMAIN = "selenehyun.notion.site"; // 도메인 A의 주소
+const TARGET_DOMAIN = "www.example.com"; // 도메인 A의 주소
 
-// DNS 조회 함수
-function lookupPromise(hostname) {
-  return new Promise((resolve, reject) => {
-    dns.lookup(hostname, (err, address) => {
-      if (err) reject(err);
-      else resolve(address);
-    });
-  });
+async function lookupIP(hostname: string): Promise<string> {
+  const resolver = new Deno.Resolver();
+  const addresses = await resolver.resolve(hostname, "A");
+  return addresses[0];
 }
 
-const server = http.createServer(async (req, res) => {
+async function handleRequest(req: Request): Promise<Response> {
   try {
-    // 도메인 A의 IP 주소 조회
-    const ip = await lookupPromise(TARGET_DOMAIN);
+    const ip = await lookupIP(TARGET_DOMAIN);
+    const url = new URL(req.url);
+    const targetUrl = `https://${ip}${url.pathname}${url.search}`;
 
-    const options = {
-      hostname: ip,
-      port: 443,
-      path: req.url,
+    const response = await fetch(targetUrl, {
       method: req.method,
       headers: {
         ...req.headers,
-        Host: TARGET_DOMAIN, // 원본 호스트 헤더 유지
+        Host: TARGET_DOMAIN,
       },
-    };
-
-    const proxyReq = https.request(options, (proxyRes) => {
-      res.writeHead(proxyRes.statusCode, proxyRes.headers);
-      proxyRes.pipe(res);
+      body: req.body,
     });
 
-    req.pipe(proxyReq);
-
-    proxyReq.on("error", (error) => {
-      console.error("요청 오류:", error);
-      res.writeHead(500);
-      res.end("Internal Server Error");
+    return new Response(response.body, {
+      status: response.status,
+      headers: response.headers,
     });
   } catch (error) {
-    console.error("DNS 조회 오류:", error);
-    res.writeHead(500);
-    res.end("DNS Lookup Error");
+    console.error("오류 발생:", error);
+    return new Response("Internal Server Error", { status: 500 });
   }
-});
+}
 
-server.listen(PORT, () => {
-  console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
-});
+console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
+await serve(handleRequest, { port: PORT });
