@@ -26,11 +26,14 @@ async function handleRequest(req: Request): Promise<Response> {
     const originalUrl = new URL(req.url);
 
     const TARGET_DOMAIN = getTargetDomain(originalUrl.hostname);
-    const pathname = originalUrl.pathname === "/" ? TARGET_DOMAIN.homePath : originalUrl.pathname;
+    const pathname =
+      originalUrl.pathname === "/"
+        ? TARGET_DOMAIN.homePath
+        : originalUrl.pathname;
 
     // IP를 사용하여 URL 생성
     const targetUrl = new URL(
-      `https://${TARGET_DOMAIN}${pathname}${originalUrl.search}`
+      `https://${TARGET_DOMAIN.host}${pathname}${originalUrl.search}`
     );
 
     const fetchRequest = new Request(targetUrl.toString(), {
