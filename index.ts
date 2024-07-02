@@ -1,33 +1,33 @@
 import { serve } from "https://deno.land/std/http/server.ts";
 
 const PORT = 3000;
-const TARGET_DOMAIN = "www.example.com"; // 도메인 A의 주소
-
-async function lookupIP(hostname: string): Promise<string> {
-  const resolver = new Deno.Resolver();
-  const addresses = await resolver.resolve(hostname, "A");
-  return addresses[0];
-}
+const TARGET_DOMAIN = "selenehyun.notion.site"; // 도메인 A의 주소
 
 async function handleRequest(req: Request): Promise<Response> {
   try {
-    const ip = await lookupIP(TARGET_DOMAIN);
-    const url = new URL(req.url);
-    const targetUrl = `https://${ip}${url.pathname}${url.search}`;
+    const originalUrl = new URL(req.url);
 
-    const response = await fetch(targetUrl, {
+    // IP를 사용하여 URL 생성
+    const targetUrl = new URL(`https://${TARGET_DOMAIN}${originalUrl.pathname}${originalUrl.search}`);
+
+    const fetchRequest = new Request(targetUrl.toString(), {
       method: req.method,
-      headers: {
-        ...req.headers,
-        Host: TARGET_DOMAIN,
-      },
+      headers: new Headers(req.headers),
       body: req.body,
     });
 
-    return new Response(response.body, {
+    // 'Host' 헤더를 TARGET_DOMAIN으로 설정
+    fetchRequest.headers.set("Host", TARGET_DOMAIN);
+
+    const response = await fetch(fetchRequest);
+
+    const newResponse = new Response(response.body, {
       status: response.status,
+      statusText: response.statusText,
       headers: response.headers,
     });
+
+    return newResponse;
   } catch (error) {
     console.error("오류 발생:", error);
     return new Response("Internal Server Error", { status: 500 });
