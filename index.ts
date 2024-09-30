@@ -15,8 +15,8 @@ function getTargetDomain(hostname: string) {
         homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
       },
       "agh.climb.place": {
-        host: "www.instagram.com",
-        homePath: "/anganhim_climbing"
+        host: "smartstore.naver.com",
+        homePath: "/anganhim"
       },
     }[hostname] || {
       host: "selenehyun.notion.site",
