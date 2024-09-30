@@ -14,6 +14,14 @@ function getTargetDomain(hostname: string) {
         host: "selenehyun.notion.site",
         homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
       },
+      "lyn-j.buy-l.ink": {
+        host: "instabio.cc",
+        homePath: "/4062701jEAVUt?utm_source=instabio&utm_medium=share",
+      },
+      "lyn-j.insta-l.ink": {
+        host: "instabio.cc",
+        homePath: "/4062701jEAVUt?utm_source=instabio&utm_medium=share",
+      },
     }[hostname] || {
       host: "selenehyun.notion.site",
       homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
