@@ -14,10 +14,6 @@ function getTargetDomain(hostname: string) {
         host: "selenehyun.notion.site",
         homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
       },
-      "agh.climb.place": {
-        host: "smartstore.naver.com",
-        homePath: "/anganhim"
-      },
     }[hostname] || {
       host: "selenehyun.notion.site",
       homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
