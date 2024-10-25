@@ -7,11 +7,11 @@ function getTargetDomain(hostname: string) {
   return (
     {
       "climb.place": {
-        host: "scalare-crew.notion.site",
+        host: "selenehyun.notion.site",
         homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
       },
       "scalare.climb.place": {
-        host: "scalare-crew.notion.site",
+        host: "selenehyun.notion.site",
         homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
       },
       "lyn-j.buy-l.ink": {
@@ -23,7 +23,7 @@ function getTargetDomain(hostname: string) {
         homePath: "/4062701jEAVUt?utm_source=instabio&utm_medium=share",
       },
     }[hostname] || {
-      host: "scalare-crew.notion.site",
+      host: "selenehyun.notion.site",
       homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
     }
   );
