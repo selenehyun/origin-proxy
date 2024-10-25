@@ -8,11 +8,11 @@ function getTargetDomain(hostname: string) {
     {
       "climb.place": {
         host: "scalare-crew.notion.site",
-        homePath: "/",
+        homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
       },
       "scalare.climb.place": {
         host: "scalare-crew.notion.site",
-        homePath: "/",
+        homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
       },
       "lyn-j.buy-l.ink": {
         host: "instabio.cc",
@@ -24,7 +24,7 @@ function getTargetDomain(hostname: string) {
       },
     }[hostname] || {
       host: "scalare-crew.notion.site",
-      homePath: "/",
+      homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
     }
   );
 }
