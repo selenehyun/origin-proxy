@@ -7,12 +7,12 @@ function getTargetDomain(hostname: string) {
   return (
     {
       "climb.place": {
-        host: "selenehyun.notion.site",
-        homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
+        host: "scalare-crew.notion.site",
+        homePath: "/",
       },
       "scalare.climb.place": {
-        host: "selenehyun.notion.site",
-        homePath: "/fb69eb50fd9444cca6c7a49a14d6bcbf",
+        host: "scalare-crew.notion.site",
+        homePath: "/",
       },
       "lyn-j.buy-l.ink": {
         host: "instabio.cc",
